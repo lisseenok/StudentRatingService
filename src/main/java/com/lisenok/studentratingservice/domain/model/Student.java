@@ -1,5 +1,6 @@
 package com.lisenok.studentratingservice.domain.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @Table(name = "student")
 public class Student {
 

@@ -32,8 +32,7 @@ public class StudentService {
         return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentDTO)));
     }
 
-    public StudentDTO update(StudentDTO studentDTO) {
-        int id = studentDTO.getId();
+    public StudentDTO update(StudentDTO studentDTO, int id) {
         findById(id).map(studentMapper::toDto)
                 .orElseThrow(() -> new StudentNotFoundProblem(id));
         return save(studentDTO);

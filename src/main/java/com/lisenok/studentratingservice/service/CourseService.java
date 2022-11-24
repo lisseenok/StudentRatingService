@@ -31,8 +31,7 @@ public class CourseService {
         return courseMapper.toDto(courseRepository.save(courseMapper.toEntity(courseDTO)));
     }
 
-    public CourseDTO update(CourseDTO courseDTO) {
-        int id = courseDTO.getId();
+    public CourseDTO update(CourseDTO courseDTO, int id) {
         findById(id).map(courseMapper::toDto)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
         return save(courseDTO);

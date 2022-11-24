@@ -29,8 +29,8 @@ public class CourseController {
         return ResponseEntity.ok().body(courseService.save(courseDTO));
     }
 
-    @PutMapping
-    public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO courseDTO) {
-        return ResponseEntity.ok().body(courseService.update(courseDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO courseDTO, @PathVariable("id") int id) {
+        return ResponseEntity.ok().body(courseService.update(courseDTO, id));
     }
 }

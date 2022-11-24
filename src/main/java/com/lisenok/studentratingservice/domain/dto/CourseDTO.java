@@ -1,20 +1,20 @@
 package com.lisenok.studentratingservice.domain.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
-@Schema
+@Builder
 public class CourseDTO {
     private int id;
 
     private String title;
 
-    private Instant startDate;
+    private LocalDateTime startDate;
 
-    private Instant endDate;
+    private LocalDateTime endDate;
 
     private boolean isActive;
 
