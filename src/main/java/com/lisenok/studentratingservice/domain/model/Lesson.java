@@ -1,5 +1,8 @@
 package com.lisenok.studentratingservice.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +14,11 @@ import javax.persistence.Table;
 import java.time.Instant;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "lesson")
 public class Lesson {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +36,5 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
 
 }

@@ -1,5 +1,8 @@
 package com.lisenok.studentratingservice.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +14,8 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "student")
 public class Student {
 
