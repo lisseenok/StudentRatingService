@@ -67,7 +67,7 @@
             <scope>runtime</scope>
         </dependency>
 
-<!--        openAPI documentation-->
+        <!--        openAPI documentation-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
