@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,5 +18,9 @@ public class CourseDTO {
     private LocalDateTime endDate;
 
     private boolean isActive;
+
+    private List<StudentDTO> students;
+
+    private List<LessonDTO> lessons;
 
 }

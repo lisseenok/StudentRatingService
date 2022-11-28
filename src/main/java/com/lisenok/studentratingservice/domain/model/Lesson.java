@@ -1,6 +1,9 @@
 package com.lisenok.studentratingservice.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -10,12 +13,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "lesson")
 public class Lesson {
 
@@ -27,8 +35,8 @@ public class Lesson {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "date")
-    private Instant date;
+    @Column(name = "start_date")
+    private LocalDateTime date;
 
     @Column(name = "max_grade")
     private int maxGrade;
@@ -36,5 +44,8 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToMany
+    private List<Grade> grades;
 
 }
