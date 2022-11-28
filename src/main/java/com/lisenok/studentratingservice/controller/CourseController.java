@@ -33,4 +33,10 @@ public class CourseController {
     public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO courseDTO, @PathVariable("id") int id) {
         return ResponseEntity.ok().body(courseService.update(courseDTO, id));
     }
+
+    @PutMapping("/{course_id}/students/{student_id}")
+    public ResponseEntity<CourseDTO> addStudent(@PathVariable("course_id") int courseId, @PathVariable("student_id") int studentId) {
+        return ResponseEntity.ok().body(courseService.addStudent(courseId, studentId));
+    }
+
 }
