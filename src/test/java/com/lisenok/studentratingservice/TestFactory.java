@@ -7,6 +7,7 @@ import com.lisenok.studentratingservice.domain.model.Student;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Класс для статических методов создания объектов, используемых в тестах
@@ -22,6 +23,20 @@ public class TestFactory {
                 .startDate(time)
                 .endDate(time)
                 .isActive(true)
+                .build();
+    }
+
+    public static Course getCourseWithStudents() {
+        Student student = getStudent();
+        Student student2 = getStudent();
+        student2.setName("testName 2");
+        return Course.builder()
+                .id(1)
+                .title("test course")
+                .startDate(time)
+                .endDate(time)
+                .isActive(true)
+                .students(List.of(student, student2))
                 .build();
     }
 
