@@ -1,5 +1,6 @@
 package com.lisenok.studentratingservice.controller;
 
+import com.lisenok.studentratingservice.domain.dto.RatingResponseDTO;
 import com.lisenok.studentratingservice.domain.dto.StudentDTO;
 import com.lisenok.studentratingservice.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,5 +35,10 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO studentDTO, @PathVariable("id") int id) {
         return ResponseEntity.ok().body(studentService.update(studentDTO, id));
+    }
+
+    @GetMapping("/{id}/ratings")
+    public ResponseEntity<List<RatingResponseDTO>> getRatings(@PathVariable("id") int id) {
+        return ResponseEntity.ok().body(studentService.getRatings(id));
     }
 }
