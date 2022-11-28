@@ -15,8 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,6 +47,12 @@ public class Course {
     @Column(name = "is_active")
     private boolean isActive;
 
+    /**
+     * В данном случае Course - "owning side", то есть добавление студента в список студентов курса
+     * повлияет на связанную таблицу, а добавление курса в список курсов у студента - нет.
+     * При необходимости можно создать отдельную модель, по типу CourseStudentKey, тогда добавление будет работать
+     * с обемх сторон
+     */
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "courses_students",
@@ -52,5 +60,18 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Student> students;
+
+    @OneToMany
+    private List<Lesson> lessons;
+
+    public void addStudent(Student student) {
+        if (students == null) students = new ArrayList<>();
+        students.add(student);
+    }
+
+    public void addLesson(Lesson lesson) {
+        if (lessons == null) lessons = new ArrayList<>();
+        lessons.add(lesson);
+    }
 
 }

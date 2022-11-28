@@ -4,6 +4,7 @@ import com.lisenok.studentratingservice.AbstractIntegrationTest;
 import com.lisenok.studentratingservice.DbTestUtil;
 import com.lisenok.studentratingservice.TestFactory;
 import com.lisenok.studentratingservice.domain.model.Course;
+import com.lisenok.studentratingservice.domain.model.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
     /**
      * Метод выполняется перед каждым тестом для рестарта sequence в таблице
      * примерчание: сброс sequence можно сделать с помощью одной аннотации над данным классом:
-     * @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD), однако это существенно снижает
+     * "@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD), однако это существенно снижает
      * производительность, поскольку перед каждым тестом создается новый контекст. Поэтому более верным решением
      * является написание методов сбрасывающих sequence sql запросом
      * @throws SQLException
