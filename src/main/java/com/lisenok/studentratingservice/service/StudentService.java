@@ -1,7 +1,8 @@
 package com.lisenok.studentratingservice.service;
 
 import com.lisenok.studentratingservice.domain.dto.RatingResponseDTO;
-import com.lisenok.studentratingservice.domain.dto.StudentDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Student;
 import com.lisenok.studentratingservice.mapper.RatingMapper;
 import com.lisenok.studentratingservice.mapper.StudentMapper;
@@ -28,7 +29,7 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
-    public StudentDTO getById(int id) {
+    public StudentResponseDTO getById(int id) {
         return findById(id)
                 .map(studentMapper::toDto)
                 .orElseThrow(() -> new StudentNotFoundProblem(id));
@@ -39,14 +40,14 @@ public class StudentService {
                 .orElseThrow(() -> new StudentNotFoundProblem(id));
     }
 
-    public StudentDTO save(StudentDTO studentDTO) {
-        return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentDTO)));
+    public StudentResponseDTO save(StudentRequestDTO studentRequestDTO) {
+        return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentRequestDTO)));
     }
 
-    public StudentDTO update(StudentDTO studentDTO, int id) {
+    public StudentResponseDTO update(StudentRequestDTO studentRequestDTO, int id) {
         findById(id).map(studentMapper::toDto)
                 .orElseThrow(() -> new StudentNotFoundProblem(id));
-        return save(studentDTO);
+        return save(studentRequestDTO);
     }
 
     public List<RatingResponseDTO> getRatings(int id) {

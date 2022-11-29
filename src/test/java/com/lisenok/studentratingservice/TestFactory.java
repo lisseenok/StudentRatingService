@@ -1,11 +1,10 @@
 package com.lisenok.studentratingservice;
 
-import com.lisenok.studentratingservice.domain.dto.CourseDTO;
-import com.lisenok.studentratingservice.domain.dto.StudentDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseResponseDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Course;
 import com.lisenok.studentratingservice.domain.model.Student;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,8 +39,8 @@ public class TestFactory {
                 .build();
     }
 
-    public static CourseDTO getCourseDto() {
-        return CourseDTO.builder()
+    public static CourseResponseDTO getCourseDto() {
+        return CourseResponseDTO.builder()
                 .id(1)
                 .title("test course")
                 .startDate(time)
@@ -61,8 +60,8 @@ public class TestFactory {
                 .build();
     }
 
-    public static StudentDTO getStudentDto() {
-        return StudentDTO.builder()
+    public static StudentResponseDTO getStudentDto() {
+        return StudentResponseDTO.builder()
                 .id(1)
                 .name("testName")
                 .lastName("testLastName")

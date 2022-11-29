@@ -1,7 +1,8 @@
 package com.lisenok.studentratingservice.controller;
 
 import com.lisenok.studentratingservice.domain.dto.RatingResponseDTO;
-import com.lisenok.studentratingservice.domain.dto.StudentDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentResponseDTO;
 import com.lisenok.studentratingservice.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +24,18 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getById(@PathVariable("id") int id) {
+    public ResponseEntity<StudentResponseDTO> getById(@PathVariable("id") int id) {
         return ResponseEntity.ok().body(studentService.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO studentDTO) {
-        return ResponseEntity.ok().body(studentService.save(studentDTO));
+    public ResponseEntity<StudentResponseDTO> save(@RequestBody StudentRequestDTO studentRequestDTO) {
+        return ResponseEntity.ok().body(studentService.save(studentRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO studentDTO, @PathVariable("id") int id) {
-        return ResponseEntity.ok().body(studentService.update(studentDTO, id));
+    public ResponseEntity<StudentResponseDTO> update(@RequestBody StudentRequestDTO studentRequestDTO, @PathVariable("id") int id) {
+        return ResponseEntity.ok().body(studentService.update(studentRequestDTO, id));
     }
 
     @GetMapping("/{id}/ratings")
