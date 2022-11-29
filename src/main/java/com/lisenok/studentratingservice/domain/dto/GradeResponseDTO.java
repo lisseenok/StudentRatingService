@@ -9,7 +9,7 @@ public class GradeResponseDTO {
 
     private int gradeScore;
 
-    private StudentDTO studentDTO;
+    private StudentResponseDTO studentResponseDTO;
 
-    private LessonDTO lessonDTO;
+    private LessonResponseDTO lessonResponseDTO;
 }

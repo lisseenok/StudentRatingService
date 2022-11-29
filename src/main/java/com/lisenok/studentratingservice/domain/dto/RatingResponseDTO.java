@@ -9,5 +9,5 @@ public class RatingResponseDTO {
 
     private boolean isCredited;
 
-    private CourseDTO courseDTO;
+    private CourseResponseDTO courseResponseDTO;
 }
