@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {CourseMapper.class})
 public interface RatingMapper {
 
-    @Mapping(target = "courseDTO", source = "course", qualifiedByName = "toDto")
+    @Mapping(target = "courseResponseDTO", source = "course", qualifiedByName = "courseToCourseResponseDto")
     RatingResponseDTO toDto(Rating entity);
 
 }
