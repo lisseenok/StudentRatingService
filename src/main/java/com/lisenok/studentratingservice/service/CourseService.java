@@ -1,6 +1,7 @@
 package com.lisenok.studentratingservice.service;
 
-import com.lisenok.studentratingservice.domain.dto.CourseDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Course;
 import com.lisenok.studentratingservice.domain.model.Student;
 import com.lisenok.studentratingservice.mapper.CourseMapper;
@@ -24,7 +25,7 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public CourseDTO getById(int id) {
+    public CourseResponseDTO getById(int id) {
         return findById(id)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
@@ -35,21 +36,21 @@ public class CourseService {
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
     }
 
-    public CourseDTO save(Course course) {
+    public CourseResponseDTO save(Course course) {
         return courseMapper.toDto(courseRepository.save(course));
     }
 
-    public CourseDTO save(CourseDTO courseDTO) {
-        return save(courseMapper.toEntity(courseDTO));
+    public CourseResponseDTO save(CourseRequestDTO courseRequestDTO) {
+        return save(courseMapper.toEntity(courseRequestDTO));
     }
 
-    public CourseDTO update(CourseDTO courseDTO, int id) {
+    public CourseResponseDTO update(CourseRequestDTO courseRequestDTO, int id) {
         findById(id).map(courseMapper::toDto)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
-        return save(courseDTO);
+        return save(courseRequestDTO);
     }
 
-    public CourseDTO addStudent(int courseId, int studentId) {
+    public CourseResponseDTO addStudent(int courseId, int studentId) {
         Course course = getEntityById(courseId);
         Student student = studentService.getEntityById(studentId);
         course.addStudent(student);

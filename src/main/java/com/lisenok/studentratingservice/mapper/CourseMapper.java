@@ -1,6 +1,7 @@
 package com.lisenok.studentratingservice.mapper;
 
-import com.lisenok.studentratingservice.domain.dto.CourseDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Course;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,14 +10,16 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring", uses = {StudentMapper.class, LessonMapper.class})
 public interface CourseMapper {
 
-    @Named("toEntity")
-    Course toEntity(CourseDTO dto);
+    @Named("courseRequestDtoToCourse")
+    Course toEntity(CourseRequestDTO dto);
 
-    @Named("toDto")
-    @Mapping(target = "students", source = "students", qualifiedByName = "toDtoIgnoreCourses")
-    CourseDTO toDto(Course entity);
+    @Named("courseToCourseResponseDto")
+    @Mapping(target = "students", source = "students", qualifiedByName = "studentToStudentResponseDtoIgnoreLists")
+    @Mapping(target = "lessons", source = "lessons", qualifiedByName = "lessonToLessonResponseDtoIgnoreLists")
+    CourseResponseDTO toDto(Course entity);
 
+    @Named("courseToCourseResponseDtoIgnoreLists")
     @Mapping(target = "students", source = "students", ignore = true)
-    @Named("toDtoIgnoreLists")
-    CourseDTO toDtoIgnoreLists(Course entity);
+    @Mapping(target = "lessons", source = "lessons", ignore = true)
+    CourseResponseDTO toDtoIgnoreLists(Course entity);
 }

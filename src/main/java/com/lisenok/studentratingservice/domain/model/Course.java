@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,6 +56,7 @@ public class Course {
      * с обемх сторон
      */
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "courses_students",
             joinColumns = @JoinColumn(name = "student_id"),
@@ -61,7 +64,8 @@ public class Course {
     )
     private List<Student> students;
 
-    @OneToMany
+    @OneToMany(mappedBy = "course")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Lesson> lessons;
 
     public void addStudent(Student student) {
