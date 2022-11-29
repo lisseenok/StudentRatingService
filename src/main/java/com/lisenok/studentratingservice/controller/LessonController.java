@@ -1,6 +1,7 @@
 package com.lisenok.studentratingservice.controller;
 
-import com.lisenok.studentratingservice.domain.dto.LessonDTO;
+import com.lisenok.studentratingservice.domain.dto.LessonRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.LessonResponseDTO;
 import com.lisenok.studentratingservice.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,17 @@ public class LessonController {
     private final LessonService lessonService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<LessonDTO> getById(@PathVariable("id") int id) {
+    public ResponseEntity<LessonResponseDTO> getById(@PathVariable("id") int id) {
         return ResponseEntity.ok().body(lessonService.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<LessonDTO> save(@RequestBody LessonDTO lessonDTO) {
-        return ResponseEntity.ok().body(lessonService.save(lessonDTO));
+    public ResponseEntity<LessonResponseDTO> save(@RequestBody LessonRequestDTO lessonRequestDTO) {
+        return ResponseEntity.ok().body(lessonService.save(lessonRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LessonDTO> update(@RequestBody LessonDTO lessonDTO, @PathVariable("id") int id) {
-        return ResponseEntity.ok().body(lessonService.update(lessonDTO, id));
+    public ResponseEntity<LessonResponseDTO> update(@RequestBody LessonRequestDTO lessonRequestDTO, @PathVariable("id") int id) {
+        return ResponseEntity.ok().body(lessonService.update(lessonRequestDTO, id));
     }
 }

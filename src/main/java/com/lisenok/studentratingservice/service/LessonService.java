@@ -1,6 +1,8 @@
 package com.lisenok.studentratingservice.service;
 
-import com.lisenok.studentratingservice.domain.dto.LessonDTO;
+import com.lisenok.studentratingservice.domain.dto.LessonRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.LessonResponseDTO;
+import com.lisenok.studentratingservice.domain.model.Course;
 import com.lisenok.studentratingservice.domain.model.Lesson;
 import com.lisenok.studentratingservice.mapper.LessonMapper;
 import com.lisenok.studentratingservice.problem.LessonNotFoundProblem;
@@ -18,12 +20,13 @@ public class LessonService {
 
     private final LessonMapper lessonMapper;
 
+    private final CourseService courseService;
 
     public Optional<Lesson> findById(int id) {
         return lessonRepository.findById(id);
     }
 
-    public LessonDTO getById(int id) {
+    public LessonResponseDTO getById(int id) {
         return findById(id)
                 .map(lessonMapper::toDto)
                 .orElseThrow(() -> new LessonNotFoundProblem(id));
@@ -34,17 +37,20 @@ public class LessonService {
                 .orElseThrow(() -> new LessonNotFoundProblem(id));
     }
 
-    public LessonDTO save(Lesson lesson) {
+    public LessonResponseDTO save(Lesson lesson) {
         return lessonMapper.toDto(lessonRepository.save(lesson));
     }
 
-    public LessonDTO save(LessonDTO lessonDTO) {
-        return save(lessonMapper.toEntity(lessonDTO));
+    public LessonResponseDTO save(LessonRequestDTO lessonRequestDTO) {
+        Course course = courseService.getEntityById(lessonRequestDTO.getCourseId());
+        Lesson lesson = lessonMapper.toEntity(lessonRequestDTO);
+        lesson.setCourse(course);
+        return save(lesson);
     }
 
-    public LessonDTO update(LessonDTO lessonDTO, int id) {
+    public LessonResponseDTO update(LessonRequestDTO lessonRequestDTO, int id) {
         findById(id).map(lessonMapper::toDto)
                 .orElseThrow(() -> new LessonNotFoundProblem(id));
-        return save(lessonDTO);
+        return save(lessonRequestDTO);
     }
 }

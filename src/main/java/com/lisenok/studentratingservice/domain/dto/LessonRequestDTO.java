@@ -5,9 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class LessonDTO {
-
-    private int id;
+public class LessonRequestDTO {
 
     private String title;
 
@@ -15,5 +13,5 @@ public class LessonDTO {
 
     private int maxGrade;
 
-    private CourseDTO course;
+    private int courseId;
 }
