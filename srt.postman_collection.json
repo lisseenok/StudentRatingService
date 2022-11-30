@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "35a0b651-a7cc-497b-80bc-612b00ddd3e7",
+		"name": "Student rating service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23986798"
+	},
+	"item": [
+		{
+			"name": "test request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/test",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get course",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/courses/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get lesson",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/lessons/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lessons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get student rating",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/students/1/ratings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"1",
+						"ratings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/students/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test course\",\n    \"startDate\": \"2020-02-02T21:00:00Z\",\n    \"endDate\": \"2022-01-11T21:00:00Z\",\n    \"active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/courses",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save grade",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gradeScore\": \"100\",\n    \"studentId\": \"1\",\n    \"lessonId\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/grades",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"grades"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save lesson",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test lesson\",\n    \"date\": \"2020-02-03T00:00:00\",\n    \"maxGrade\": 100,\n    \"courseId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/lessons",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"ivan\",\n    \"lastName\": \"ivanov\",\n    \"patronymicName\": \"ivanovich\",\n    \"groupNumber\": \"ikbo-01\",\n    \"active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/students",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "count rating",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"studentId\": 1,\n    \"courseId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ratings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update course",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"new test course\",\n    \"startDate\": \"2020-02-02T21:00:00Z\",\n    \"endDate\": \"2022-01-11T21:00:00Z\",\n    \"active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/courses/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update lesson",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"new test lesson\",\n    \"date\": \"2020-02-03T00:00:00\",\n    \"maxGrade\": 50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/lessons/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lessons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"new ivan\",\n    \"lastName\": \"new ivanov\",\n    \"patronymicName\": \"new ivanovich\",\n    \"groupNumber\": \"ikbo-02\",\n    \"active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/students/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/courses/1/students/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"1",
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
