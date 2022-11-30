@@ -10,6 +10,7 @@ import com.lisenok.studentratingservice.repository.LessonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,5 +61,9 @@ public class LessonService {
         Lesson updatedLesson = lessonMapper.toEntity(lessonRequestDTO);
         updatedLesson.setId(id);
         return save(updatedLesson);
+    }
+
+    public List<Lesson> getAllByCourse(Course course) {
+        return lessonRepository.getAllByCourse(course);
     }
 }

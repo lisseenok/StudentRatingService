@@ -10,11 +10,14 @@ import com.lisenok.studentratingservice.mapper.RatingMapper;
 import com.lisenok.studentratingservice.problem.ZeroDivisionProblem;
 import com.lisenok.studentratingservice.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,8 @@ public class RatingService {
     private final StudentService studentService;
 
     private final GradeService gradeService;
+
+    private final LessonService lessonService;
 
     private final RatingMapper ratingMapper;
 
@@ -41,9 +46,7 @@ public class RatingService {
         return rating;
     }
 
-    public RatingResponseDTO countRating(RatingRequestDTO ratingRequestDTO) {
-
-        Rating rating = getRatingFromRequest(ratingRequestDTO);
+    public Rating countRating(Rating rating) {
 
         int sumRating = 0;
         int sumMaxGrades = 0;
@@ -53,8 +56,8 @@ public class RatingService {
         int currentMaxScore;
 
         // получаем список занятий курса, котрые были раньше текущего времени
-        Set<Lesson> courseLessons = rating.getCourse().getLessons().stream()
-                .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toSet());
+        List<Lesson> courseLessons = lessonService.getAllByCourse(rating.getCourse()).stream()
+                .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
 
         // дял каждого занятия ссумируем оценки студента и проверяем набрано ли не менее 70% от максимального балла
         for (Lesson lesson : courseLessons){
@@ -75,7 +78,24 @@ public class RatingService {
 
         rating.setCredited(isCredited && resultRating >= 0.7);
 
-        return ratingMapper.toDto(ratingRepository.save(rating));
+        return rating;
+    }
 
+    public void countAndSaveRating(Rating rating) {
+        ratingRepository.save(countRating(rating));
+    }
+
+    public RatingResponseDTO countRating(RatingRequestDTO ratingRequestDTO) {
+        Rating rating = getRatingFromRequest(ratingRequestDTO);
+        return ratingMapper.toDto(ratingRepository.save(countRating(rating)));
+    }
+
+//    @Scheduled(fixedDelay = 2 * 3600000)
+    @Scheduled(fixedDelay = 5000)
+    public void actualizeRatings() {
+        List<Rating> ratings = ratingRepository.findAll();
+        for (var rating: ratings) {
+            countAndSaveRating(rating);
+        }
     }
 }
