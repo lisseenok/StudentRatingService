@@ -68,8 +68,10 @@ public class CourseService {
     }
 
     public CourseResponseDTO update(CourseRequestDTO courseRequestDTO, int id) {
-        findById(id).orElseThrow(() -> new CourseNotFoundProblem(id));
-        return save(courseRequestDTO);
+        getEntityById(id);
+        Course updatedCourse = courseMapper.toEntity(courseRequestDTO);
+        updatedCourse.setId(id);
+        return save(updatedCourse);
     }
 
     public CourseResponseDTO addStudent(int courseId, int studentId) {

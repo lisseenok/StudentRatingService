@@ -15,7 +15,7 @@ public interface LessonMapper {
     Lesson toEntity(LessonRequestDTO dto);
 
     @Named("lessonToLessonResponseDto")
-    @Mapping(target = "course", source = "course", qualifiedByName = "courseToCourseResponseDto")
+    @Mapping(target = "course", source = "course", qualifiedByName = "courseToCourseResponseDtoIgnoreLists")
     @Mapping(target = "grades", source = "grades", qualifiedByName = "gradeToGradeResponseDto")
     LessonResponseDTO toDto(Lesson entity);
 

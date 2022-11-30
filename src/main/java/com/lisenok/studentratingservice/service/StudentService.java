@@ -53,14 +53,19 @@ public class StudentService {
     public StudentResponseDTO getFullById(int id) {
         return studentMapper.toDto(getFullEntityById(id));
     }
+
+    public StudentResponseDTO save(Student student) {
+        return studentMapper.toDto(studentRepository.save(student));
+    }
     public StudentResponseDTO save(StudentRequestDTO studentRequestDTO) {
         return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentRequestDTO)));
     }
 
     public StudentResponseDTO update(StudentRequestDTO studentRequestDTO, int id) {
-        findById(id).map(studentMapper::toDto)
-                .orElseThrow(() -> new StudentNotFoundProblem(id));
-        return save(studentRequestDTO);
+        getEntityById(id);
+        Student updatedStudent = studentMapper.toEntity(studentRequestDTO);
+        updatedStudent.setId(id);
+        return save(updatedStudent);
     }
 
     public Set<RatingResponseDTO> getRatings(int id) {

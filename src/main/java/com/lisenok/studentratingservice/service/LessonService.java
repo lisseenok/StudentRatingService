@@ -56,7 +56,9 @@ public class LessonService {
     }
 
     public LessonResponseDTO update(LessonRequestDTO lessonRequestDTO, int id) {
-        findById(id).orElseThrow(() -> new LessonNotFoundProblem(id));
-        return save(lessonRequestDTO);
+        getEntityById(id);
+        Lesson updatedLesson = lessonMapper.toEntity(lessonRequestDTO);
+        updatedLesson.setId(id);
+        return save(updatedLesson);
     }
 }
