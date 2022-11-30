@@ -12,8 +12,10 @@ import com.lisenok.studentratingservice.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class RatingService {
     private final RatingRepository ratingRepository;
 
     public Rating getRatingFromRequest(RatingRequestDTO ratingRequestDTO) {
-        Course course = courseService.getEntityById(ratingRequestDTO.getCourseId());
+        Course course = courseService.getFullEntityById(ratingRequestDTO.getCourseId());
         Student student = studentService.getEntityById(ratingRequestDTO.getStudentId());
         Rating rating = new Rating();
         rating.setStudent(student);
@@ -51,8 +53,8 @@ public class RatingService {
         int currentMaxScore;
 
         // получаем список занятий курса, котрые были раньше текущего времени
-        List<Lesson> courseLessons = rating.getCourse().getLessons().stream()
-                .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
+        Set<Lesson> courseLessons = rating.getCourse().getLessons().stream()
+                .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toSet());
 
         // дял каждого занятия ссумируем оценки студента и проверяем набрано ли не менее 70% от максимального балла
         for (Lesson lesson : courseLessons){
@@ -65,10 +67,13 @@ public class RatingService {
         if (sumMaxGrades == 0) throw new ZeroDivisionProblem();
         else {
             resultRating = (double) sumRating / sumMaxGrades;
-            rating.setRatingScore(resultRating);
+            // округление до 3 знаков после запятой
+            BigDecimal result = BigDecimal.valueOf(resultRating);
+            result = result.setScale(3, RoundingMode.DOWN);
+            rating.setRatingScore(result.doubleValue());
         }
 
-        rating.setCredited(isCredited && resultRating >= 70);
+        rating.setCredited(isCredited && resultRating >= 0.7);
 
         return ratingMapper.toDto(ratingRepository.save(rating));
 

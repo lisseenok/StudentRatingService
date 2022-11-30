@@ -10,6 +10,8 @@ import com.lisenok.studentratingservice.repository.GradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class GradeService {
@@ -32,6 +34,11 @@ public class GradeService {
     }
 
     public int getStudentScore(Student student, Lesson lesson) {
-        return gradeRepository.getGradeByLessonAndStudent(lesson, student).getGradeScore();
+        Optional<Grade> grade = gradeRepository.getGradeByLessonAndStudent(lesson, student);
+        if (grade.isPresent()) {
+            Optional<Integer> score = Optional.of(grade.get().getGradeScore());
+            if (score.isPresent()) return score.get();
+        }
+        return 0;
     }
 }

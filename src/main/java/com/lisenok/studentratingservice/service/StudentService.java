@@ -11,8 +11,8 @@ import com.lisenok.studentratingservice.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,18 +28,31 @@ public class StudentService {
     public Optional<Student> findById(int id) {
         return studentRepository.findById(id);
     }
+    public Optional<Student> findFullById(int id) {
+        return studentRepository.findFullById(id);
+    }
 
-    public StudentResponseDTO getById(int id) {
-        return findById(id)
-                .map(studentMapper::toDto)
-                .orElseThrow(() -> new StudentNotFoundProblem(id));
+    public Optional<Student> findWithRatingsById(int id) {
+        return studentRepository.findWithRatingsById(id);
     }
 
     public Student getEntityById(int id) {
         return findById(id)
                 .orElseThrow(() -> new StudentNotFoundProblem(id));
     }
+    public Student getFullEntityById(int id) {
+        return findFullById(id)
+                .orElseThrow(() -> new StudentNotFoundProblem(id));
+    }
 
+    public Student getEntityWithRatingsById(int id) {
+        return findWithRatingsById(id)
+                .orElseThrow(() -> new StudentNotFoundProblem(id));
+    }
+
+    public StudentResponseDTO getFullById(int id) {
+        return studentMapper.toDto(getFullEntityById(id));
+    }
     public StudentResponseDTO save(StudentRequestDTO studentRequestDTO) {
         return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentRequestDTO)));
     }
@@ -50,9 +63,9 @@ public class StudentService {
         return save(studentRequestDTO);
     }
 
-    public List<RatingResponseDTO> getRatings(int id) {
-        Student student = getEntityById(id);
-        return student.getRatings().stream().map(ratingMapper::toDto).collect(Collectors.toList());
+    public Set<RatingResponseDTO> getRatings(int id) {
+        Student student = getEntityWithRatingsById(id);
+        return student.getRatings().stream().map(ratingMapper::toDto).collect(Collectors.toSet());
     }
 
 }

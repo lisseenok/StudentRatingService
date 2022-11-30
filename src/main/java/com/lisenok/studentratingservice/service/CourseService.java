@@ -25,15 +25,38 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public CourseResponseDTO getById(int id) {
-        return findById(id)
-                .map(courseMapper::toDto)
-                .orElseThrow(() -> new CourseNotFoundProblem(id));
+    public Optional<Course> findFullById(int id) {
+        return courseRepository.findFullById(id);
+    }
+    public Optional<Course> findWithStudentsById(int id) {
+        return courseRepository.findWithStudentsById(id);
+    }
+
+    public Optional<Course> findWithLessonsById(int id) {
+        return courseRepository.findWithLessonsById(id);
     }
 
     public Course getEntityById(int id) {
         return findById(id)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
+    }
+    public Course getFullEntityById(int id) {
+        return findFullById(id)
+                .orElseThrow(() -> new CourseNotFoundProblem(id));
+    }
+
+    public Course getEntityWithStudentsById(int id) {
+        return findWithStudentsById(id)
+                .orElseThrow(() -> new CourseNotFoundProblem(id));
+    }
+
+    public Course getEntityWithLessonsById(int id) {
+        return findWithLessonsById(id)
+                .orElseThrow(() -> new CourseNotFoundProblem(id));
+    }
+
+    public CourseResponseDTO getFullById(int id) {
+        return courseMapper.toDto(getFullEntityById(id));
     }
 
     public CourseResponseDTO save(Course course) {
@@ -45,13 +68,12 @@ public class CourseService {
     }
 
     public CourseResponseDTO update(CourseRequestDTO courseRequestDTO, int id) {
-        findById(id).map(courseMapper::toDto)
-                .orElseThrow(() -> new CourseNotFoundProblem(id));
+        findById(id).orElseThrow(() -> new CourseNotFoundProblem(id));
         return save(courseRequestDTO);
     }
 
     public CourseResponseDTO addStudent(int courseId, int studentId) {
-        Course course = getEntityById(courseId);
+        Course course = getEntityWithStudentsById(courseId);
         Student student = studentService.getEntityById(studentId);
         course.addStudent(student);
         return save(course);

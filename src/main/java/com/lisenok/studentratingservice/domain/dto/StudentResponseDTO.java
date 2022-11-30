@@ -3,7 +3,7 @@ package com.lisenok.studentratingservice.domain.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,6 +20,6 @@ public class StudentResponseDTO {
 
     private boolean isActive;
 
-    private List<CourseResponseDTO> courses;
+    private Set<CourseResponseDTO> courses;
 
 }

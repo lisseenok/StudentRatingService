@@ -22,7 +22,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseResponseDTO> getById(@PathVariable("id") int id) {
-        return ResponseEntity.ok().body(courseService.getById(id));
+        return ResponseEntity.ok().body(courseService.getFullById(id));
     }
 
     @PostMapping

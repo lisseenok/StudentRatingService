@@ -11,13 +11,16 @@ import org.mapstruct.Named;
 public interface StudentMapper {
 
     @Named("studentRequestDtoToStudent")
+    @Mapping(target = "isActive", expression = "java((dto.isActive())?dto.isActive():false)")
     Student toEntity(StudentRequestDTO dto);
 
     @Named("studentToStudentResponseDto")
+    @Mapping(target = "isActive", expression = "java((entity.isActive())?entity.isActive():false)")
     @Mapping(target = "courses", source = "courses", qualifiedByName = "courseToCourseResponseDtoIgnoreLists")
     StudentResponseDTO toDto(Student entity);
 
     @Named("studentToStudentResponseDtoIgnoreLists")
+    @Mapping(target = "isActive", expression = "java((entity.isActive())?entity.isActive():false)")
     @Mapping(target = "courses", source = "courses", ignore = true)
     StudentResponseDTO toDtoIgnoreCourses(Student entity);
 }

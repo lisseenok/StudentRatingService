@@ -16,8 +16,8 @@ public interface GradeMapper {
     Grade toEntity(GradeRequestDTO dto);
 
     @Named("gradeToGradeResponseDto")
-    @Mapping(target = "studentResponseDTO", source = "student", qualifiedByName = "studentToStudentResponseDto")
-    @Mapping(target = "lessonResponseDTO", source = "lesson", qualifiedByName = "lessonToLessonResponseDto")
+    @Mapping(target = "studentResponseDTO", source = "student", qualifiedByName = "studentToStudentResponseDtoIgnoreLists")
+    @Mapping(target = "lessonResponseDTO", source = "lesson", qualifiedByName = "lessonToLessonResponseDtoIgnoreLists")
     GradeResponseDTO toDto(Grade entity);
 
 }

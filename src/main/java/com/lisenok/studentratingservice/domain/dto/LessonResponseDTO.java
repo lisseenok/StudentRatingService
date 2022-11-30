@@ -3,7 +3,7 @@ package com.lisenok.studentratingservice.domain.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class LessonResponseDTO {
@@ -18,5 +18,5 @@ public class LessonResponseDTO {
 
     private CourseResponseDTO course;
 
-    private List<GradeResponseDTO> grades;
+    private Set<GradeResponseDTO> grades;
 }

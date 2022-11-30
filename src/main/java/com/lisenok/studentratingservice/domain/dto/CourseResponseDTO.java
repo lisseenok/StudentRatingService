@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -19,8 +19,8 @@ public class CourseResponseDTO {
 
     private boolean isActive;
 
-    private List<StudentResponseDTO> students;
+    private Set<StudentResponseDTO> students;
 
-    private List<LessonResponseDTO> lessons;
+    private Set<LessonResponseDTO> lessons;
 
 }

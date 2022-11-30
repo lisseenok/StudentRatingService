@@ -13,9 +13,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,6 +27,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "student")
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(name = "Student"),
+        @NamedEntityGraph(name = "Student.courses",
+                attributeNodes = {
+                        @NamedAttributeNode("courses"),
+                }
+        ),
+        @NamedEntityGraph(name = "Student.ratings",
+                attributeNodes = {
+                        @NamedAttributeNode("ratings")
+                }
+        ),
+        @NamedEntityGraph(name = "Student.courses-grades-ratings",
+                attributeNodes = {
+                    @NamedAttributeNode("courses"),
+                    @NamedAttributeNode("grades"),
+                    @NamedAttributeNode("ratings")
+                }
+        )
+})
 public class Student {
 
     @Id
@@ -47,11 +70,11 @@ public class Student {
     private boolean isActive;
 
     @ManyToMany(mappedBy = "students", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Course> courses;
+    private Set<Course> courses;
 
-    @OneToMany
-    private List<Grade> grades;
+    @OneToMany(mappedBy = "student")
+    private Set<Grade> grades;
 
-    @OneToMany
-    private List<Rating> ratings;
+    @OneToMany(mappedBy = "student")
+    private Set<Rating> ratings;
 }

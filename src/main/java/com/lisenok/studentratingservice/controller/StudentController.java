@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,7 +25,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponseDTO> getById(@PathVariable("id") int id) {
-        return ResponseEntity.ok().body(studentService.getById(id));
+        return ResponseEntity.ok().body(studentService.getFullById(id));
     }
 
     @PostMapping
@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/ratings")
-    public ResponseEntity<List<RatingResponseDTO>> getRatings(@PathVariable("id") int id) {
+    public ResponseEntity<Set<RatingResponseDTO>> getRatings(@PathVariable("id") int id) {
         return ResponseEntity.ok().body(studentService.getRatings(id));
     }
 }

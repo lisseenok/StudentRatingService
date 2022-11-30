@@ -26,15 +26,22 @@ public class LessonService {
         return lessonRepository.findById(id);
     }
 
-    public LessonResponseDTO getById(int id) {
-        return findById(id)
-                .map(lessonMapper::toDto)
-                .orElseThrow(() -> new LessonNotFoundProblem(id));
+    public Optional<Lesson> findWithGradesById(int id) {
+        return lessonRepository.findWithGradesById(id);
     }
 
     public Lesson getEntityById(int id) {
         return findById(id)
                 .orElseThrow(() -> new LessonNotFoundProblem(id));
+    }
+
+    public Lesson getFullEntityById(int id) {
+        return findWithGradesById(id)
+                .orElseThrow(() -> new LessonNotFoundProblem(id));
+    }
+
+    public LessonResponseDTO getById(int id) {
+        return lessonMapper.toDto(getFullEntityById(id));
     }
 
     public LessonResponseDTO save(Lesson lesson) {
@@ -49,8 +56,7 @@ public class LessonService {
     }
 
     public LessonResponseDTO update(LessonRequestDTO lessonRequestDTO, int id) {
-        findById(id).map(lessonMapper::toDto)
-                .orElseThrow(() -> new LessonNotFoundProblem(id));
+        findById(id).orElseThrow(() -> new LessonNotFoundProblem(id));
         return save(lessonRequestDTO);
     }
 }

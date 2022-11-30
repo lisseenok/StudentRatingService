@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,6 +28,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Table(name = "lesson")
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(name = "Lesson"),
+        @NamedEntityGraph(name = "Lesson.grades",
+                attributeNodes = @NamedAttributeNode("grades")
+        )
+})
 public class Lesson {
 
     @Id
@@ -47,8 +54,7 @@ public class Lesson {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Grade> grades;
+    @OneToMany(mappedBy = "lesson")
+    private Set<Grade> grades;
 
 }
