@@ -38,6 +38,12 @@ public class StudentController {
         return ResponseEntity.ok().body(studentService.update(studentRequestDTO, id));
     }
 
+    /**
+     * Метод получения рейтингов по всем курсам студента
+     *
+     * @param id - уникальный идентификатор студента
+     * @return Set<RatingResponseDTO>
+     */
     @GetMapping("/{id}/ratings")
     public ResponseEntity<Set<RatingResponseDTO>> getRatings(@PathVariable("id") int id) {
         return ResponseEntity.ok().body(studentService.getRatings(id));

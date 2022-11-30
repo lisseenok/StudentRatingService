@@ -5,6 +5,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * DTO занятия (ответ)
+ */
 @Data
 public class LessonResponseDTO {
 

@@ -2,6 +2,9 @@ package com.lisenok.studentratingservice.domain.dto;
 
 import lombok.Data;
 
+/**
+ * DTO оценки (ответ)
+ */
 @Data
 public class GradeResponseDTO {
 

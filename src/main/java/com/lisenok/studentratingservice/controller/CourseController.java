@@ -35,6 +35,13 @@ public class CourseController {
         return ResponseEntity.ok().body(courseService.update(courseRequestDTO, id));
     }
 
+    /**
+     * Метод добавления студента на курс
+     *
+     * @param courseId  - уникальный идентификатор курса
+     * @param studentId - уникальный идентификатор студента
+     * @return CourseResponseDTO
+     */
     @PutMapping("/{course_id}/students/{student_id}")
     public ResponseEntity<CourseResponseDTO> addStudent(@PathVariable("course_id") int courseId, @PathVariable("student_id") int studentId) {
         return ResponseEntity.ok().body(courseService.addStudent(courseId, studentId));

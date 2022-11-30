@@ -5,6 +5,9 @@ import org.zalando.problem.Status;
 
 import java.net.URI;
 
+/**
+ * Сообщение с подбробными сведениями об ошибке: курс не найден
+ */
 public class CourseNotFoundProblem extends AbstractThrowableProblem {
 
     private static final URI TYPE

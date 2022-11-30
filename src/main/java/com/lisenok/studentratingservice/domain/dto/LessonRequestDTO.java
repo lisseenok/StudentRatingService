@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * DTO занятия (запрос)
+ */
 @Data
 public class LessonRequestDTO {
 

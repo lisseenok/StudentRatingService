@@ -20,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
+/**
+ * Модель студента с entity graph для задания собственных стратегий загрузки данных для каждого запроса
+ */
 @Entity
 @Getter
 @Setter
@@ -41,9 +44,9 @@ import java.util.Set;
         ),
         @NamedEntityGraph(name = "Student.courses-grades-ratings",
                 attributeNodes = {
-                    @NamedAttributeNode("courses"),
-                    @NamedAttributeNode("grades"),
-                    @NamedAttributeNode("ratings")
+                        @NamedAttributeNode("courses"),
+                        @NamedAttributeNode("grades"),
+                        @NamedAttributeNode("ratings")
                 }
         )
 })

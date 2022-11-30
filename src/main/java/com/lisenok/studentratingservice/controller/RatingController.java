@@ -17,6 +17,12 @@ public class RatingController {
 
     private final RatingService ratingService;
 
+    /**
+     * Метод подсчета рейтинга студента
+     *
+     * @param ratingRequestDTO - DTO запроса на подсчет рейтинга
+     * @return RatingResponseDTO
+     */
     @PostMapping
     public ResponseEntity<RatingResponseDTO> countRating(@RequestBody RatingRequestDTO ratingRequestDTO) {
         return ResponseEntity.ok().body(ratingService.countRating(ratingRequestDTO));

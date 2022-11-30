@@ -37,6 +37,14 @@ public class RatingService {
 
     private final RatingRepository ratingRepository;
 
+    /**
+     * Метод маппинга DTO рейтинга (запрос) в модель рейтинга
+     * Написан в сервисе, а не в маппере, поскольку DTO содержит id курса и студента,
+     * и необходима проверка существования этих объектов
+     *
+     * @param ratingRequestDTO DTO рейтинга (запрос)
+     * @return модель рейтинга
+     */
     public Rating getRatingFromRequest(RatingRequestDTO ratingRequestDTO) {
         Course course = courseService.getFullEntityById(ratingRequestDTO.getCourseId());
         Student student = studentService.getEntityById(ratingRequestDTO.getStudentId());
@@ -46,6 +54,12 @@ public class RatingService {
         return rating;
     }
 
+    /**
+     * Метод подсчета рейтинга студента
+     *
+     * @param rating модель рейтинга
+     * @return модель рейтинга (уже посчитанного)
+     */
     public Rating countRating(Rating rating) {
 
         int sumRating = 0;
@@ -60,7 +74,7 @@ public class RatingService {
                 .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
 
         // дял каждого занятия ссумируем оценки студента и проверяем набрано ли не менее 70% от максимального балла
-        for (Lesson lesson : courseLessons){
+        for (Lesson lesson : courseLessons) {
             currentScore = gradeService.getStudentScore(rating.getStudent(), lesson);
             currentMaxScore = lesson.getMaxGrade();
             sumRating += currentScore;
@@ -81,20 +95,34 @@ public class RatingService {
         return rating;
     }
 
+    /**
+     * Метод подсчета и сохранения рейтинга
+     *
+     * @param rating модель рейтинга
+     */
     public void countAndSaveRating(Rating rating) {
         ratingRepository.save(countRating(rating));
     }
 
+    /**
+     * Метод подсчета рейтинга (для контроллера)
+     *
+     * @param ratingRequestDTO DTO рейтинга (запрос)
+     * @return DTO рейтинга (ответ)
+     */
     public RatingResponseDTO countRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = getRatingFromRequest(ratingRequestDTO);
         return ratingMapper.toDto(ratingRepository.save(countRating(rating)));
     }
 
+    /**
+     * Метод актуализации рейтинга (актуализирует записи в таблице рейтингов с частотой, указанной в fixedDelay)
+     */
 //    @Scheduled(fixedDelay = 2 * 3600000)
     @Scheduled(fixedDelay = 5000)
     public void actualizeRatings() {
         List<Rating> ratings = ratingRepository.findAll();
-        for (var rating: ratings) {
+        for (var rating : ratings) {
             countAndSaveRating(rating);
         }
     }

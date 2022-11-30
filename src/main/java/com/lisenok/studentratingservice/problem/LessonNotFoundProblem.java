@@ -5,6 +5,9 @@ import org.zalando.problem.Status;
 
 import java.net.URI;
 
+/**
+ * Сообщение с подбробными сведениями об ошибке: занятие не найдено
+ */
 public class LessonNotFoundProblem extends AbstractThrowableProblem {
 
     private static final URI TYPE

@@ -6,6 +6,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * DTO курса (ответ)
+ */
 @Data
 @Builder
 public class CourseResponseDTO {

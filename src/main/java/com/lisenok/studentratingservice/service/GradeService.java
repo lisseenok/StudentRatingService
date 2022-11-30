@@ -33,6 +33,13 @@ public class GradeService {
         return gradeMapper.toDto(gradeRepository.save(grade));
     }
 
+    /**
+     * Метод для получения оценки студента за занятие
+     *
+     * @param student модель студента
+     * @param lesson  модель занятия
+     * @return целое число - оценка студента за занятие
+     */
     public int getStudentScore(Student student, Lesson lesson) {
         Optional<Grade> grade = gradeRepository.getGradeByLessonAndStudent(lesson, student);
         if (grade.isPresent()) {

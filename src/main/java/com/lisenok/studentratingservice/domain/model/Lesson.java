@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Модель занятия с entity graph для задания собственных стратегий загрузки данных для каждого запроса
+ */
 @Entity
 @Getter
 @Setter

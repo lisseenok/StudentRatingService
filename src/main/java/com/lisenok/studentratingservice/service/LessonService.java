@@ -23,14 +23,28 @@ public class LessonService {
 
     private final CourseService courseService;
 
+    /**
+     * Метод получения модели занятия без связанных сущностей
+     *
+     * @param id - уникальный идентификатор занятия
+     * @return модель занятия или null, если занятие не найдено
+     */
     public Optional<Lesson> findById(int id) {
         return lessonRepository.findById(id);
     }
 
+    /**
+     * Метод получения модели занятия со связанными оценками
+     *
+     * @param id - уникальный идентификатор занятия
+     * @return модель занятия или null, если занятие не найдено
+     */
     public Optional<Lesson> findWithGradesById(int id) {
         return lessonRepository.findWithGradesById(id);
     }
 
+    // далее идут методы, которые, вызывая описанные выше методы, либо возвращают занятие (или DTO),
+    // либо создают исключение если занятие не найдено
     public Lesson getEntityById(int id) {
         return findById(id)
                 .orElseThrow(() -> new LessonNotFoundProblem(id));
@@ -63,6 +77,12 @@ public class LessonService {
         return save(updatedLesson);
     }
 
+    /**
+     * Метод получения всех моделей занятий курса со связанными оценками
+     *
+     * @param course - модель курса
+     * @return модели занятия
+     */
     public List<Lesson> getAllByCourse(Course course) {
         return lessonRepository.getAllByCourse(course);
     }

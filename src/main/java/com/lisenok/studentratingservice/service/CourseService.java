@@ -21,25 +21,54 @@ public class CourseService {
 
     private final StudentService studentService;
 
+    /**
+     * Метод получения курса без связанных сущностей
+     *
+     * @param id - уникальный идентификатор курса
+     * @return курс или null
+     */
     public Optional<Course> findById(int id) {
         return courseRepository.findById(id);
     }
 
+    /**
+     * Метод получения курса с связанными студентами и занятиями
+     *
+     * @param id - уникальный идентификатор курса
+     * @return курс или null
+     */
     public Optional<Course> findFullById(int id) {
         return courseRepository.findFullById(id);
     }
+
+    /**
+     * Метод получения курса с связанными студентами
+     *
+     * @param id - уникальный идентификатор курса
+     * @return курс или null
+     */
     public Optional<Course> findWithStudentsById(int id) {
         return courseRepository.findWithStudentsById(id);
     }
 
+    /**
+     * Метод получения курса с связанными занятиями
+     *
+     * @param id - уникальный идентификатор курса
+     * @return курс или null
+     */
     public Optional<Course> findWithLessonsById(int id) {
         return courseRepository.findWithLessonsById(id);
     }
+
+    // далее идут методы, которые, вызывая описанные выше методы, либо возвращают курс,
+    // либо создают исключение если курс не найден
 
     public Course getEntityById(int id) {
         return findById(id)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));
     }
+
     public Course getFullEntityById(int id) {
         return findFullById(id)
                 .orElseThrow(() -> new CourseNotFoundProblem(id));

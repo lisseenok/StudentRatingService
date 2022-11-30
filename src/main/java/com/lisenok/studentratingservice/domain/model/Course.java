@@ -24,6 +24,9 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Модель курса с entity graph для задания собственных стратегий загрузки данных для каждого запроса
+ */
 @Entity
 @Getter
 @Setter
@@ -35,8 +38,8 @@ import java.util.Set;
         @NamedEntityGraph(name = "Course"),
         @NamedEntityGraph(name = "Course.students-lessons",
                 attributeNodes = {
-                    @NamedAttributeNode("students"),
-                    @NamedAttributeNode("lessons")
+                        @NamedAttributeNode("students"),
+                        @NamedAttributeNode("lessons")
                 }
         ),
         @NamedEntityGraph(name = "Course.students",
