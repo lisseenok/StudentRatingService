@@ -3,6 +3,8 @@ package com.lisenok.studentratingservice.controller;
 import com.lisenok.studentratingservice.AbstractIntegrationTest;
 import com.lisenok.studentratingservice.DbTestUtil;
 import com.lisenok.studentratingservice.TestFactory;
+import com.lisenok.studentratingservice.domain.dto.CourseRequestDTO;
+import com.lisenok.studentratingservice.domain.dto.CourseResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Course;
 import com.lisenok.studentratingservice.domain.model.Student;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,9 +44,13 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
     @DisplayName("Getting course by id test")
     void getByMid() throws Exception {
 
-        Course course = TestFactory.getCourse();
+        CourseRequestDTO courseRequestDTO = TestFactory.getCourseRequestDto();
+
+        Course course = courseMapper.toEntity(courseRequestDTO);
         courseRepository.save(course);
-        String expectedContent = objectMapper.writeValueAsString(courseMapper.toDto(course));
+
+        CourseResponseDTO courseResponseDTO = courseMapper.toDto(course);
+        String expectedContent = objectMapper.writeValueAsString(courseResponseDTO);
 
 
         String actualContent = mockMvc.perform(get("/courses/" + course.getId())
@@ -63,7 +69,9 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
     @DisplayName("Saving course test")
     void save() throws Exception {
 
-        Course course = TestFactory.getCourse();
+        CourseRequestDTO courseRequestDTO = TestFactory.getCourseRequestDto();
+        Course course = courseMapper.toEntity(courseRequestDTO);
+        course.setId(1);
         String expectedContent = objectMapper.writeValueAsString(courseMapper.toDto(course));
 
         String actualContent = mockMvc.perform(post("/courses/")
@@ -84,14 +92,17 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
 
         Course course = TestFactory.getCourse();
         courseRepository.save(course);
-        Course updatedCourse = TestFactory.getCourse();
-        updatedCourse.setTitle("updated course");
 
-        String expectedContent = objectMapper.writeValueAsString(courseMapper.toDto(updatedCourse));
+        CourseRequestDTO courseRequestDTOUpdated = TestFactory.getCourseRequestDto();
+        courseRequestDTOUpdated.setTitle("updated course");
+
+        course.setTitle("updated course");
+
+        String expectedContent = objectMapper.writeValueAsString(courseMapper.toDto(course));
 
         String actualContent = mockMvc.perform(put("/courses/" + course.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(expectedContent))
+                        .content(objectMapper.writeValueAsString(courseRequestDTOUpdated)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
@@ -100,5 +111,29 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
 
         assertEquals(expectedContent, actualContent);
 
+    }
+
+    @Test
+    @DisplayName("Adding student to course test")
+    void addStudent() throws Exception {
+        Course course = TestFactory.getCourse();
+        Student student = TestFactory.getStudent();
+
+        courseRepository.save(course);
+        studentRepository.save(student);
+
+        course.addStudent(student);
+
+        String expectedContent = objectMapper.writeValueAsString(courseMapper.toDto(course));
+
+        String actualContent = mockMvc.perform(put("/courses/" + course.getId() + "/students/" + student.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8);
+
+        assertEquals(expectedContent, actualContent);
     }
 }
