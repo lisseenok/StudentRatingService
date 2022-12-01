@@ -48,7 +48,7 @@ public class RatingService {
     public Rating getRatingFromRequest(RatingRequestDTO ratingRequestDTO) {
         Course course = courseService.getFullEntityById(ratingRequestDTO.getCourseId());
         Student student = studentService.getEntityById(ratingRequestDTO.getStudentId());
-        Rating rating = new Rating();
+        Rating rating = Rating.builder().build();
         rating.setStudent(student);
         rating.setCourse(course);
         return rating;

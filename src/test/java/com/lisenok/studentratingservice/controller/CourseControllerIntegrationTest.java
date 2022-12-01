@@ -44,9 +44,7 @@ class CourseControllerIntegrationTest extends AbstractIntegrationTest {
     @DisplayName("Getting course by id test")
     void getByMid() throws Exception {
 
-        CourseRequestDTO courseRequestDTO = TestFactory.getCourseRequestDto();
-
-        Course course = courseMapper.toEntity(courseRequestDTO);
+        Course course = TestFactory.getCourse();
         courseRepository.save(course);
 
         CourseResponseDTO courseResponseDTO = courseMapper.toDto(course);

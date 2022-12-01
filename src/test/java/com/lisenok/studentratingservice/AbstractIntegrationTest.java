@@ -2,8 +2,10 @@ package com.lisenok.studentratingservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisenok.studentratingservice.mapper.CourseMapper;
+import com.lisenok.studentratingservice.mapper.RatingMapper;
 import com.lisenok.studentratingservice.mapper.StudentMapper;
 import com.lisenok.studentratingservice.repository.CourseRepository;
+import com.lisenok.studentratingservice.repository.RatingRepository;
 import com.lisenok.studentratingservice.repository.StudentRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +39,16 @@ public abstract class AbstractIntegrationTest {
     protected CourseMapper courseMapper;
 
     @Autowired
+    protected RatingMapper ratingMapper;
+
+    @Autowired
     protected CourseRepository courseRepository;
 
     @Autowired
     protected StudentRepository studentRepository;
+
+    @Autowired
+    protected RatingRepository ratingRepository;
 
     @Autowired
     protected ApplicationContext applicationContext;

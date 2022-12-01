@@ -2,8 +2,10 @@ package com.lisenok.studentratingservice;
 
 import com.lisenok.studentratingservice.domain.dto.CourseRequestDTO;
 import com.lisenok.studentratingservice.domain.dto.CourseResponseDTO;
+import com.lisenok.studentratingservice.domain.dto.StudentRequestDTO;
 import com.lisenok.studentratingservice.domain.dto.StudentResponseDTO;
 import com.lisenok.studentratingservice.domain.model.Course;
+import com.lisenok.studentratingservice.domain.model.Rating;
 import com.lisenok.studentratingservice.domain.model.Student;
 
 import java.time.LocalDateTime;
@@ -26,6 +28,16 @@ public class TestFactory {
                 .build();
     }
 
+    public static StudentRequestDTO getStudentRequestDTO() {
+        return StudentRequestDTO.builder()
+                .name("test name")
+                .lastName("test last name")
+                .patronymicName("test patronymic name")
+                .groupNumber("abc1")
+                .isActive(true)
+                .build();
+    }
+
     public static Course getCourse() {
         return Course.builder()
                 .id(1)
@@ -44,6 +56,13 @@ public class TestFactory {
                 .patronymicName("test patronymic name")
                 .groupNumber("abc1")
                 .isActive(true)
+                .build();
+    }
+
+    public static Rating getRating() {
+        return Rating.builder()
+                .ratingScore(100)
+                .isCredited(true)
                 .build();
     }
 }
