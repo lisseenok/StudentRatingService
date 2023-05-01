@@ -10,7 +10,6 @@ import com.lisenok.studentratingservice.mapper.RatingMapper;
 import com.lisenok.studentratingservice.problem.ZeroDivisionProblem;
 import com.lisenok.studentratingservice.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -69,11 +68,11 @@ public class RatingService {
         int currentScore;
         int currentMaxScore;
 
-        // получаем список занятий курса, котрые были раньше текущего времени
+        // получаем список занятий курса, которые были раньше текущего времени
         List<Lesson> courseLessons = lessonService.getAllByCourse(rating.getCourse()).stream()
                 .filter(a -> a.getDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
 
-        // дял каждого занятия ссумируем оценки студента и проверяем набрано ли не менее 70% от максимального балла
+        // дял каждого занятия суммируем оценки студента и проверяем набрано ли не менее 70% от максимального балла
         for (Lesson lesson : courseLessons) {
             currentScore = gradeService.getStudentScore(rating.getStudent(), lesson);
             currentMaxScore = lesson.getMaxGrade();
@@ -118,7 +117,6 @@ public class RatingService {
     /**
      * Метод актуализации рейтинга (актуализирует записи в таблице рейтингов с частотой, указанной в fixedDelay)
      */
-//    @Scheduled(fixedDelay = 2 * 3600000)
     @Scheduled(fixedDelay = 5000)
     public void actualizeRatings() {
         List<Rating> ratings = ratingRepository.findAll();

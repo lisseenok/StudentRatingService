@@ -17,7 +17,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     Optional<Course> findById(int id);
 
     /**
-     * Метод получения курса с связанными студентами и занятиями
+     * Метод получения курса со связанными студентами и занятиями
      * @param id - уникальный идентификатор курса
      * @return курс или null
      */
@@ -25,7 +25,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     Optional<Course> findFullById(int id);
 
     /**
-     * Метод получения курса с связанными студентами
+     * Метод получения курса со связанными студентами
      * @param id - уникальный идентификатор курса
      * @return курс или null
      */
@@ -33,7 +33,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     Optional<Course> findWithStudentsById(int id);
 
     /**
-     * Метод получения курса с связанными занятиями
+     * Метод получения курса со связанными занятиями
      *
      * @param id - уникальный идентификатор курса
      * @return курс или null

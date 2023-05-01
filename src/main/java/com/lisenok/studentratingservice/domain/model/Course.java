@@ -98,5 +98,4 @@ public class Course {
         if (lessons == null) lessons = new HashSet<>();
         lessons.add(lesson);
     }
-
 }
